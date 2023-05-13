@@ -6,13 +6,13 @@ const Appointment = () => {
   const [selectedDate, setSelectedDate] = useState(new Date())
   return (
     <div>
-      <AppointmentBanner 
-      selectedDate={selectedDate}
-      setSelectedDate={setSelectedDate}
-      
+      <AppointmentBanner
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+
       ></AppointmentBanner>
       <AvailableAppointment
-      selectedDate={selectedDate}
+        selectedDate={selectedDate}
       ></AvailableAppointment>
     </div>
   );
