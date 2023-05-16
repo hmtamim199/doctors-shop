@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
 
 const Login = () => {
 
   const { register, handleSubmit } = useForm()
+  const { login } = useContext(AuthContext)
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || '/'
+
   const handleLogin = data => {
     console.log(data)
+    login(data.email, data.password)
+      .then(result => {
+        const user = result.user;
+        console.log(user)
+        navigate(from, { replace: true })
+      })
+      .catch(error => console.error(error))
   }
   return (
     <div className='h-[800px] flex justify-center items-center'>
@@ -17,12 +31,12 @@ const Login = () => {
           <div className="form-control w-full max-w-xs">
             <label className="label"> <span className="label-text">Email</span>
             </label>
-            <input type='email' {...register("email")} className="input input-bordered w-full max-w-xs" />
+            <input type='email' name='email' {...register("email")} className="input input-bordered w-full max-w-xs" />
           </div>
           <div className="form-control w-full max-w-xs">
             <label className="label"> <span className="label-text">Password</span>
             </label>
-            <input type='password' {...register("password")} className="input input-bordered w-full max-w-xs" />
+            <input type='password' name='password' {...register("password")} className="input input-bordered w-full max-w-xs" />
             <label className="label"> <span className="label-text">Forget password</span> </label>
             <input className='btn btn-accent w-full' value="login" type="submit" />
           </div>

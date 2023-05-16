@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const Singup = () => {
 
   const { register, handleSubmit } = useForm()
-  const { createUser } = useContext(AuthContext)
+  const { createUser, updateUser } = useContext(AuthContext)
 
   const handleSingup = (data) => {
     console.log(data)
@@ -14,6 +15,13 @@ const Singup = () => {
       .then(result => {
         const user = result.user;
         console.log(user)
+        toast('user created succesfully')
+        const authInfo = {
+          displayName: data.name
+        }
+        updateUser(authInfo)
+          .then(() => { })
+          .catch(error => console.log(error))
       })
       .catch((error) => console.error(error))
   }
