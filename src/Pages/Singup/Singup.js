@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 import { toast } from 'react-hot-toast';
 
@@ -8,6 +8,7 @@ const Singup = () => {
 
   const { register, handleSubmit } = useForm()
   const { createUser, updateUser } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleSingup = (data) => {
     console.log(data)
@@ -21,6 +22,7 @@ const Singup = () => {
         }
         updateUser(authInfo)
           .then(() => { })
+        navigate('/')
           .catch(error => console.log(error))
       })
       .catch((error) => console.error(error))
